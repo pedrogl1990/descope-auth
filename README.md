@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Descope Auth Demo
+
+A full-stack authentication demo built with [Descope](https://www.descope.com/) and [Next.js](https://nextjs.org/), showcasing a modern, production-ready auth flow with session management.
+
+## Features
+
+- **Sign Up & Sign In** — Powered by Descope's hosted flow UI
+- **Session Management** — Automatic session detection and token handling via `@descope/nextjs-sdk`
+- **User Profile** — Display authenticated user's name and email with avatar initials
+- **Sign Out** — Secure logout with session invalidation
+- **Dark Mode** — Automatic dark/light theme based on system preference
+- **Responsive Design** — Mobile-friendly layout
+
+## Tech Stack
+
+| Technology | Version | Purpose |
+|---|---|---|
+| [Next.js](https://nextjs.org/) | 16 | React framework (App Router) |
+| [Descope](https://www.descope.com/) | SDK 0.15 | Authentication & session management |
+| [Tailwind CSS](https://tailwindcss.com/) | v4 | Utility-first styling |
+| [TypeScript](https://www.typescriptlang.org/) | 5 | Type safety |
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- A free [Descope account](https://www.descope.com/)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/auth-demo.git
+cd auth-demo
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+NEXT_PUBLIC_DESCOPE_PROJECT_ID=your_project_id_here
+```
+
+You can find your Project ID in the [Descope Console](https://app.descope.com/) under **Project Settings**.
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+app/
+├── layout.tsx        # Root layout with AuthProvider and Geist font
+├── page.tsx          # Home page — shows user info or sign-in prompt
+├── globals.css       # Global styles and CSS design tokens
+└── sign-in/
+    └── page.tsx      # Sign-in page with Descope Flow widget
+```
 
-## Learn More
+## How It Works
 
-To learn more about Next.js, take a look at the following resources:
+1. The `AuthProvider` from `@descope/nextjs-sdk` wraps the entire app, managing session state globally.
+2. On the home page, `useSession()` detects whether the user has an active session.
+3. Authenticated users see their profile (name, email, initials avatar) and a Sign Out button.
+4. Unauthenticated users are prompted to navigate to `/sign-in`.
+5. The sign-in page renders Descope's `sign-up-or-in` flow, which handles both registration and login.
+6. On successful authentication, the user is redirected back to the home page.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
